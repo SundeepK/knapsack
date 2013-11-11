@@ -50,45 +50,44 @@ public class Knapsack  {
 		return optimalItems;
 	}
 
-	private void populateMatrices(int maxCapacity_){
-			for(int itemNum = 0; itemNum < _items.size(); itemNum++){
-			int weight = 0;		
+	private void populateMatrices(int maxCapacity_) {
+		for (int itemNum = 0; itemNum < _items.size(); itemNum++) {
+			int weight = 0;
 			List<Integer> vRow = new LinkedList<Integer>();
 			List<Integer> keepRow = new LinkedList<Integer>();
 
-			int itemWeight = _items.get(itemNum).getWeight();	
-			int itemValue = _items.get(itemNum).getValue();	
+			int itemWeight = _items.get(itemNum).getWeight();
+			int itemValue = _items.get(itemNum).getValue();
 
 			List<Integer> previousRow = _vMatrix.get(itemNum);
-			
-				//System.out.println(previousRow.toString());
-	
-			while(weight < maxCapacity_){
+
+			// System.out.println(previousRow.toString());
+
+			while (weight < maxCapacity_) {
 				weight++;
 
-				if(weight >= itemWeight){
-					int previousValue =	previousRow.get(weight-1);		
-					int index = ((weight -1 )- itemWeight)< 0 ? (itemWeight - (weight -1 )) : ((weight -1 )- itemWeight);
-					int newValue = itemValue + previousRow.get(index);			
-					
-					if(newValue > previousValue){
+				if (weight >= itemWeight) {
+					int previousValue = previousRow.get(weight - 1);
+					int index = ((weight - 1) - itemWeight) < 0 ? (itemWeight - (weight - 1)): ((weight - 1) - itemWeight);
+					int newValue = itemValue + previousRow.get(index);
+
+					if (newValue > previousValue) {
 						vRow.add(newValue);
 						keepRow.add(1);
-					}else{
+					} else {
 						vRow.add(previousValue);
 						keepRow.add(0);
 					}
-					
-				}else{
+
+				} else {
 					keepRow.add(0);
-					int y =previousRow.get(weight-1);
+					int y = previousRow.get(weight - 1);
 					vRow.add(y);
 				}
 			}
 			_vMatrix.add(vRow);
 			_keepMatrix.add(keepRow);
 		}
-			
 
 	}
 	
